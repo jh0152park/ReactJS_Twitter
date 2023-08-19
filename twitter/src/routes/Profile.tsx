@@ -1,5 +1,15 @@
+import { authService } from "../firebase";
+
 function Profile() {
-    return <span>Profile</span>;
+    function handleOnLogOut() {
+        authService.signOut();
+    }
+
+    return (
+        <>
+            <button onClick={handleOnLogOut}>Log Out</button>
+        </>
+    );
 }
 
 export default Profile;
