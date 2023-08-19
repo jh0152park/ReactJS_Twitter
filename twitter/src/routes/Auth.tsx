@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { authService } from "../firebase";
 import {
+    GithubAuthProvider,
+    GoogleAuthProvider,
     createUserWithEmailAndPassword,
     getAuth,
     signInWithEmailAndPassword,
-} from "firebase/auth";
+    signInWithPopup,
+} from "@firebase/auth";
+import { authService } from "../firebase";
 
 function Auth() {
     const [email, setEmail] = useState("");
@@ -71,6 +74,24 @@ function Auth() {
         setNewAccount((prev) => !prev);
     }
 
+    async function handleOnSocialClick(event: any) {
+        const {
+            target: { name },
+        } = event;
+
+        let data;
+        let provider: any;
+
+        if (name === "google") {
+            provider = new GoogleAuthProvider();
+        } else if (name === "github") {
+            provider = new GithubAuthProvider();
+        }
+
+        data = await signInWithPopup(authService, provider);
+        console.log(data);
+    }
+
     return (
         <div>
             <form onSubmit={handleOnSubmit}>
@@ -99,8 +120,12 @@ function Auth() {
                 {newAccount ? "Sign In" : "Create Account"}
             </span>
             <div>
-                <button>Continue with Google</button>
-                <button>Continue with Github</button>
+                <button onClick={handleOnSocialClick} name="google">
+                    Continue with Google
+                </button>
+                <button onClick={handleOnSocialClick} name="github">
+                    Continue with Github
+                </button>
             </div>
             <div>{error}</div>
         </div>
