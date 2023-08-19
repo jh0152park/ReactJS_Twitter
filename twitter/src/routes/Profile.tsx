@@ -1,7 +1,10 @@
+import { useHistory } from "react-router-dom";
 import { authService } from "../firebase";
 
 function Profile() {
+    const history = useHistory();
     function handleOnLogOut() {
+        history.push("/");
         authService.signOut();
     }
 

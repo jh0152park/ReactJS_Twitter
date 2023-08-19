@@ -18,14 +18,12 @@ function Router({ isLoggedIn }: { isLoggedIn: any }) {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Redirect from="*" to="/"></Redirect>
                     </>
                 ) : (
                     <>
                         <Route exact path="/">
                             <Auth />
                         </Route>
-                        <Redirect from="*" to="/"></Redirect>
                     </>
                 )}
             </Switch>
