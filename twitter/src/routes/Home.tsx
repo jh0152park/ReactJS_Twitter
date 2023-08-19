@@ -1,11 +1,17 @@
 import { useState } from "react";
+import { dbService } from "../firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 function Home() {
     const [tweet, setTweet] = useState("");
 
-    function handleSubmit(event: any) {
-        const newPost = tweet;
+    async function handleSubmit(event: any) {
         event.preventDefault();
+
+        await addDoc(collection(dbService, "tweets"), {
+            tweet: tweet,
+            createAt: serverTimestamp(),
+        });
         setTweet("");
     }
 
