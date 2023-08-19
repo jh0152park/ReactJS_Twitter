@@ -10,6 +10,7 @@ function Auth() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccount] = useState(true);
+    const [error, setError] = useState("");
 
     function handleOnChange(event: any) {
         console.log(event.target.name);
@@ -44,6 +45,7 @@ function Auth() {
                     const errorMessage = error.message;
                     console.log("occurred error when creating new user");
                     console.log(errorMessage);
+                    setError(errorMessage);
                 });
         } else {
             // log in
@@ -60,8 +62,13 @@ function Auth() {
                     const errorMessage = error.message;
                     console.log("occurred error when log in");
                     console.log(errorMessage);
+                    setError(errorMessage);
                 });
         }
+    }
+
+    function toggleAccount() {
+        setNewAccount((prev) => !prev);
     }
 
     return (
@@ -77,7 +84,7 @@ function Auth() {
                 />
                 <input
                     name="password"
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     required
                     value={password}
@@ -85,13 +92,17 @@ function Auth() {
                 />
                 <input
                     type="submit"
-                    value={newAccount ? "Create Account" : "Log In"}
+                    value={newAccount ? "Create Account" : "Sign In"}
                 />
             </form>
+            <span onClick={toggleAccount}>
+                {newAccount ? "Sign In" : "Create Account"}
+            </span>
             <div>
                 <button>Continue with Google</button>
                 <button>Continue with Github</button>
             </div>
+            <div>{error}</div>
         </div>
     );
 }
