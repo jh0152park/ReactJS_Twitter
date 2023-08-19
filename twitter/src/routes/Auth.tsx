@@ -33,11 +33,9 @@ function Auth() {
         setPassword("");
 
         if (newAccount) {
-            // create a new account
             const auth = getAuth();
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed in
                     const user = userCredential.user;
 
                     console.log("created new user account successfully");
@@ -51,11 +49,9 @@ function Auth() {
                     setError(errorMessage);
                 });
         } else {
-            // log in
             const auth = getAuth();
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed in
                     const user = userCredential.user;
                     console.log("log in user successfully");
                     console.log(user);
