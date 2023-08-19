@@ -1,11 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router from "./Router";
 import { authService } from "../firebase";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+    const [init, setInit] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    return <Router isLoggedIn={isLoggedIn}></Router>;
+    useEffect(() => {
+        authService.onAuthStateChanged((user) => {
+            if (user) {
+                // user is logged in
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+            setInit(true);
+        });
+    }, []);
+
+    return (
+        <>
+            {init ? (
+                <Router isLoggedIn={isLoggedIn}></Router>
+            ) : (
+                "Initialzing..."
+            )}
+        </>
+    );
 }
 
 export default App;
