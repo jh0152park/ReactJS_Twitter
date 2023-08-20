@@ -5,7 +5,7 @@ import Auth from "../routes/Auth";
 import Navigation from "./Navigation";
 import Profile from "../routes/Profile";
 
-function Router({ isLoggedIn }: { isLoggedIn: any }) {
+function Router({ isLoggedIn, userObj }: { isLoggedIn: any; userObj: any }) {
     return (
         <HashRouter>
             {isLoggedIn && <Navigation></Navigation>}
@@ -16,7 +16,7 @@ function Router({ isLoggedIn }: { isLoggedIn: any }) {
                             <Profile />
                         </Route>
                         <Route exact path="/">
-                            <Home />
+                            <Home userObj={userObj} />
                         </Route>
                     </>
                 ) : (
