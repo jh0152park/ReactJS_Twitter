@@ -4,11 +4,12 @@ import {
     addDoc,
     collection,
     getDocs,
+    onSnapshot,
+    orderBy,
     query,
-    serverTimestamp,
 } from "firebase/firestore";
 
-function Home() {
+function Home({ userObj }: { userObj: any }) {
     const [tweet, setTweet] = useState("");
     const [allTweets, setAllTweets] = useState<any>([]);
 
@@ -18,6 +19,7 @@ function Home() {
         await addDoc(collection(dbService, "tweets"), {
             tweet: tweet,
             createAt: Date.now(),
+            creater: userObj.uid,
         });
         setTweet("");
     }
@@ -43,7 +45,19 @@ function Home() {
     }
 
     useEffect(() => {
-        getAllTweets();
+        // getAllTweets();
+
+        const q = query(
+            collection(dbService, "tweets"),
+            orderBy("createAt", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+            const tweetArr = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setAllTweets(tweetArr);
+        });
     }, []);
 
     console.log(allTweets);
