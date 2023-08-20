@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { dbService } from "../firebase";
 import {
     addDoc,
@@ -9,11 +9,12 @@ import {
     query,
 } from "firebase/firestore";
 import Tweet from "../components/Tweet";
-import { finished } from "stream";
 
 function Home({ userObj }: { userObj: any }) {
+    const fileInput = useRef<any>();
     const [tweet, setTweet] = useState("");
     const [allTweets, setAllTweets] = useState<any>([]);
+    const [attachedFile, setAttachedFile] = useState<any>();
 
     async function handleSubmit(event: any) {
         event.preventDefault();
@@ -50,8 +51,16 @@ function Home({ userObj }: { userObj: any }) {
         const file = event.target.files[0];
         const reader = new FileReader();
 
-        reader.onloadend = (finishedEvent) => console.log(finishedEvent);
+        reader.onloadend = (finishedEvent) => {
+            console.log(finishedEvent);
+            setAttachedFile(reader.result);
+        };
         reader.readAsDataURL(file);
+    }
+
+    function handleOnClearFile() {
+        setAttachedFile(null);
+        fileInput.current.value = null;
     }
 
     useEffect(() => {
@@ -80,11 +89,22 @@ function Home({ userObj }: { userObj: any }) {
                     onChange={handleChange}
                 ></input>
                 <input
+                    ref={fileInput}
                     type="file"
                     accept="image/*"
                     onChange={handleOnFileChange}
                 ></input>
                 <input type="submit" value="Tweet"></input>
+                {attachedFile && (
+                    <div>
+                        <img
+                            src={attachedFile}
+                            width="50px"
+                            height="50px"
+                        ></img>
+                        <button onClick={handleOnClearFile}>Clear</button>
+                    </div>
+                )}
             </form>
             <div>
                 {allTweets.map((tweet: any) => (
