@@ -13,7 +13,7 @@ function Router({ isLoggedIn, userObj }: { isLoggedIn: any; userObj: any }) {
                 {isLoggedIn ? (
                     <>
                         <Route exact path="/profile">
-                            <Profile />
+                            <Profile userObj={userObj} />
                         </Route>
                         <Route exact path="/">
                             <Home userObj={userObj} />
