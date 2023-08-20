@@ -9,6 +9,7 @@ import {
     query,
 } from "firebase/firestore";
 import Tweet from "../components/Tweet";
+import { finished } from "stream";
 
 function Home({ userObj }: { userObj: any }) {
     const [tweet, setTweet] = useState("");
@@ -45,9 +46,15 @@ function Home({ userObj }: { userObj: any }) {
         });
     }
 
-    useEffect(() => {
-        // getAllTweets();
+    function handleOnFileChange(event: any) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
+        reader.onloadend = (finishedEvent) => console.log(finishedEvent);
+        reader.readAsDataURL(file);
+    }
+
+    useEffect(() => {
         const q = query(
             collection(dbService, "tweets"),
             orderBy("createAt", "desc")
@@ -61,8 +68,6 @@ function Home({ userObj }: { userObj: any }) {
         });
     }, []);
 
-    console.log(allTweets);
-
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -73,6 +78,11 @@ function Home({ userObj }: { userObj: any }) {
                     minLength={1}
                     maxLength={128}
                     onChange={handleChange}
+                ></input>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleOnFileChange}
                 ></input>
                 <input type="submit" value="Tweet"></input>
             </form>
