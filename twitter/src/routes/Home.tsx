@@ -21,6 +21,8 @@ function Home({ userObj }: { userObj: any }) {
 
     async function handleSubmit(event: any) {
         event.preventDefault();
+        if (tweet.length < 1) return;
+
         let attachedFileURL = "";
 
         if (attachedFile !== "") {
