@@ -60,6 +60,13 @@ function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
             ) : (
                 <>
                     <h4>{tweetObj.tweet}</h4>
+                    {tweetObj.attachedFileURL && (
+                        <img
+                            src={tweetObj.attachedFileURL}
+                            width="50px"
+                            height="50px"
+                        />
+                    )}
                     {isOwner && (
                         <>
                             <button onClick={toggleEdit}>Edit</button>

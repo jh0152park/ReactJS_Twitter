@@ -11,26 +11,39 @@ import {
 import Tweet from "../components/Tweet";
 import { ref, uploadString } from "@firebase/storage";
 import { v4 } from "uuid";
+import { getDownloadURL } from "firebase/storage";
 
 function Home({ userObj }: { userObj: any }) {
     const fileInput = useRef<any>();
     const [tweet, setTweet] = useState("");
     const [allTweets, setAllTweets] = useState<any>([]);
-    const [attachedFile, setAttachedFile] = useState<any>();
+    const [attachedFile, setAttachedFile] = useState<any>("");
 
     async function handleSubmit(event: any) {
         event.preventDefault();
+        let attachedFileURL = "";
 
-        // await addDoc(collection(dbService, "tweets"), {
-        //     tweet: tweet,
-        //     createAt: Date.now(),
-        //     creater: userObj.uid,
-        // });
-        // setTweet("");
+        if (attachedFile !== "") {
+            const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+            const response = await uploadString(
+                fileRef,
+                attachedFile,
+                "data_url"
+            );
+            attachedFileURL = await getDownloadURL(response.ref);
+        }
 
-        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
-        const response = await uploadString(fileRef, attachedFile, "data_url");
-        console.log(response);
+        const newPost = {
+            tweet: tweet,
+            createAt: Date.now(),
+            creater: userObj.uid,
+            attachedFileURL: attachedFileURL,
+        };
+
+        await addDoc(collection(dbService, "tweets"), newPost);
+        setTweet("");
+        setAttachedFile("");
+        fileInput.current.value = null;
     }
 
     function handleChange(event: any) {
@@ -65,7 +78,7 @@ function Home({ userObj }: { userObj: any }) {
     }
 
     function handleOnClearFile() {
-        setAttachedFile(null);
+        setAttachedFile("");
         fileInput.current.value = null;
     }
 
