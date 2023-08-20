@@ -8,6 +8,7 @@ import {
     orderBy,
     query,
 } from "firebase/firestore";
+import Tweet from "../components/Tweet";
 
 function Home({ userObj }: { userObj: any }) {
     const [tweet, setTweet] = useState("");
@@ -77,9 +78,11 @@ function Home({ userObj }: { userObj: any }) {
             </form>
             <div>
                 {allTweets.map((tweet: any) => (
-                    <div key={tweet.id}>
-                        <h4>{tweet.tweet}</h4>
-                    </div>
+                    <Tweet
+                        key={tweet.id}
+                        tweetObj={tweet}
+                        isOwner={tweet.creater === userObj.uid}
+                    />
                 ))}
             </div>
         </div>
