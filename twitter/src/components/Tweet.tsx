@@ -41,17 +41,21 @@ function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
         <div>
             {edit ? (
                 <>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            onChange={handleEditChange}
-                            placeholder="What's new on your mind!?"
-                            type="text"
-                            value={newTweet}
-                            required
-                        />
-                        <input type="submit" value="Update Tweet" />
-                    </form>
-                    <button onClick={toggleEdit}>Cancle</button>
+                    {isOwner && (
+                        <>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    onChange={handleEditChange}
+                                    placeholder="What's new on your mind!?"
+                                    type="text"
+                                    value={newTweet}
+                                    required
+                                />
+                                <input type="submit" value="Update Tweet" />
+                            </form>
+                            <button onClick={toggleEdit}>Cancle</button>
+                        </>
+                    )}
                 </>
             ) : (
                 <>
