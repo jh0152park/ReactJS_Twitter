@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { dbService } from "../firebase";
+import { dbService, storageService } from "../firebase";
 import {
     addDoc,
     collection,
@@ -9,6 +9,8 @@ import {
     query,
 } from "firebase/firestore";
 import Tweet from "../components/Tweet";
+import { ref, uploadString } from "@firebase/storage";
+import { v4 } from "uuid";
 
 function Home({ userObj }: { userObj: any }) {
     const fileInput = useRef<any>();
@@ -19,12 +21,16 @@ function Home({ userObj }: { userObj: any }) {
     async function handleSubmit(event: any) {
         event.preventDefault();
 
-        await addDoc(collection(dbService, "tweets"), {
-            tweet: tweet,
-            createAt: Date.now(),
-            creater: userObj.uid,
-        });
-        setTweet("");
+        // await addDoc(collection(dbService, "tweets"), {
+        //     tweet: tweet,
+        //     createAt: Date.now(),
+        //     creater: userObj.uid,
+        // });
+        // setTweet("");
+
+        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+        const response = await uploadString(fileRef, attachedFile, "data_url");
+        console.log(response);
     }
 
     function handleChange(event: any) {
@@ -34,18 +40,18 @@ function Home({ userObj }: { userObj: any }) {
         setTweet(value);
     }
 
-    async function getAllTweets() {
-        const q = query(collection(dbService, "tweets"));
-        const querySnapshot = await getDocs(q);
+    // async function getAllTweets() {
+    //     const q = query(collection(dbService, "tweets"));
+    //     const querySnapshot = await getDocs(q);
 
-        querySnapshot.forEach((document) => {
-            const tweetObj = {
-                ...document.data(),
-                id: document.id,
-            };
-            setAllTweets((prev: any) => [tweetObj, ...prev]);
-        });
-    }
+    //     querySnapshot.forEach((document) => {
+    //         const tweetObj = {
+    //             ...document.data(),
+    //             id: document.id,
+    //         };
+    //         setAllTweets((prev: any) => [tweetObj, ...prev]);
+    //     });
+    // }
 
     function handleOnFileChange(event: any) {
         const file = event.target.files[0];
