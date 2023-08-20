@@ -1,6 +1,7 @@
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { dbService } from "../firebase";
+import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
+import { dbService, storageService } from "../firebase";
 import { useState } from "react";
+import { deleteObject, ref } from "firebase/storage";
 
 function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
     const [edit, setEdit] = useState(false);
@@ -12,7 +13,11 @@ function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
         );
         const TweetTextRef = doc(dbService, "tweets", `${tweetObj.id}`);
         if (agree) {
-            await deleteDoc(TweetTextRef);
+            await deleteDoc(doc(getFirestore(), "tweets", `${tweetObj.id}`));
+            if (tweetObj.attachedFileURL !== "")
+                await deleteObject(
+                    ref(storageService, tweetObj.attachedFileURL)
+                );
         }
     }
 
