@@ -8,7 +8,7 @@ import Profile from "../routes/Profile";
 function Router({ isLoggedIn, userObj }: { isLoggedIn: any; userObj: any }) {
     return (
         <HashRouter>
-            {isLoggedIn && <Navigation></Navigation>}
+            {isLoggedIn && <Navigation userObj={userObj} />}
             <Switch>
                 {isLoggedIn ? (
                     <>
