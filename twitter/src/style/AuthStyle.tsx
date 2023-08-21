@@ -5,6 +5,7 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 50px;
     width: 320px;
 `;
 
@@ -64,6 +65,7 @@ export const SNSLoginButton = styled.button`
     border-radius: 20px;
     padding: 5px;
     display: flex;
+    background-color: whitesmoke;
     justify-content: flex-start;
     align-items: center;
     &:hover {
