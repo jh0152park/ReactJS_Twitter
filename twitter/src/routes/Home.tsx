@@ -3,7 +3,6 @@ import { dbService, storageService } from "../firebase";
 import {
     addDoc,
     collection,
-    getDocs,
     onSnapshot,
     orderBy,
     query,
@@ -12,6 +11,7 @@ import Tweet from "../components/Tweet";
 import { ref, uploadString } from "@firebase/storage";
 import { v4 } from "uuid";
 import { getDownloadURL } from "firebase/storage";
+import { Container } from "../style/HomeStyle";
 
 function Home({ userObj }: { userObj: any }) {
     const fileInput = useRef<any>();
@@ -86,7 +86,7 @@ function Home({ userObj }: { userObj: any }) {
     }, []);
 
     return (
-        <div>
+        <Container>
             <form onSubmit={handleSubmit}>
                 <input
                     value={tweet}
@@ -123,7 +123,7 @@ function Home({ userObj }: { userObj: any }) {
                     />
                 ))}
             </div>
-        </div>
+        </Container>
     );
 }
 
