@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { authService, dbService } from "../firebase";
 import { useEffect } from "react";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import { LogoutButton } from "../style/ProfileStyle";
 
 function Profile({ userObj }: { userObj: any }) {
     const history = useHistory();
@@ -30,7 +31,7 @@ function Profile({ userObj }: { userObj: any }) {
 
     return (
         <>
-            <button onClick={handleOnLogOut}>Log Out</button>
+            <LogoutButton onClick={handleOnLogOut}>Log Out</LogoutButton>
         </>
     );
 }

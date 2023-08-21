@@ -40,6 +40,7 @@ const GlobalStyles = createGlobalStyle`
         line-height: 1;
         background-color: #171819;
         color: whitesmoke;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
     ol, ul {
         list-style: none;
