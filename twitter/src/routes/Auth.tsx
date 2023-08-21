@@ -18,7 +18,8 @@ import {
     SNSLoginButtons,
     ToggleButton,
 } from "../style/AuthStyle";
-import { GITHUB_LOGO_URL, GOOGLE_LOGO_URL } from "..";
+import { GITHUB_LOGO_URL, GOOGLE_LOGO_URL, LOGO_URL } from "..";
+import { Logo } from "../style/AppStyle";
 
 function Auth() {
     const [email, setEmail] = useState("");
@@ -101,6 +102,7 @@ function Auth() {
 
     return (
         <Container>
+            <Logo src={LOGO_URL} width="50px" height="50px" />
             <Form onSubmit={handleOnSubmit}>
                 <Input
                     name="email"
