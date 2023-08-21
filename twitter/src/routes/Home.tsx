@@ -16,6 +16,9 @@ import {
     AttachedInput,
     Container,
     Form,
+    Frame,
+    FrameButton,
+    Frames,
     Input,
     SubmitButton,
 } from "../style/HomeStyle";
@@ -120,14 +123,16 @@ function Home({ userObj }: { userObj: any }) {
                 ></AttachedInput>
                 <SubmitButton type="submit" value="➔"></SubmitButton>
                 {attachedFile && (
-                    <div>
-                        <img
+                    <Frames>
+                        <Frame
                             src={attachedFile}
                             width="50px"
                             height="50px"
-                        ></img>
-                        <button onClick={handleOnClearFile}>Clear</button>
-                    </div>
+                        ></Frame>
+                        <FrameButton onClick={handleOnClearFile}>
+                            Clear
+                        </FrameButton>
+                    </Frames>
                 )}
             </Form>
             <div>

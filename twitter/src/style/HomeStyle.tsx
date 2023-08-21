@@ -61,3 +61,27 @@ export const SubmitButton = styled.input`
         cursor: pointer;
     }
 `;
+
+export const Frames = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+`;
+
+export const Frame = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+`;
+
+export const FrameButton = styled.button`
+    border: none;
+    background-color: inherit;
+    color: #1988ec;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
+`;
