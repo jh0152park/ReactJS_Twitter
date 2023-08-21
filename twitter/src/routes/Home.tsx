@@ -11,7 +11,14 @@ import Tweet from "../components/Tweet";
 import { ref, uploadString } from "@firebase/storage";
 import { v4 } from "uuid";
 import { getDownloadURL } from "firebase/storage";
-import { Container } from "../style/HomeStyle";
+import {
+    AttachedBox,
+    AttachedInput,
+    Container,
+    Form,
+    Input,
+    SubmitButton,
+} from "../style/HomeStyle";
 
 function Home({ userObj }: { userObj: any }) {
     const fileInput = useRef<any>();
@@ -56,6 +63,8 @@ function Home({ userObj }: { userObj: any }) {
     }
 
     function handleOnFileChange(event: any) {
+        if (event.target.files.length <= 0) fileInput.current.value = "";
+
         const file = event.target.files[0];
         const reader = new FileReader();
 
@@ -69,6 +78,10 @@ function Home({ userObj }: { userObj: any }) {
     function handleOnClearFile() {
         setAttachedFile("");
         fileInput.current.value = null;
+    }
+
+    function handleOnFileAttachedBoxClick() {
+        fileInput.current.click();
     }
 
     useEffect(() => {
@@ -87,22 +100,25 @@ function Home({ userObj }: { userObj: any }) {
 
     return (
         <Container>
-            <form onSubmit={handleSubmit}>
-                <input
+            <Form onSubmit={handleSubmit}>
+                <Input
                     value={tweet}
                     type="text"
-                    placeholder="what's going on your mind!?"
+                    placeholder="What's going on your mind!?"
                     minLength={1}
                     maxLength={128}
                     onChange={handleChange}
-                ></input>
-                <input
+                ></Input>
+                <AttachedBox onClick={handleOnFileAttachedBoxClick}>
+                    Add Photos <span>+</span>
+                </AttachedBox>
+                <AttachedInput
                     ref={fileInput}
                     type="file"
                     accept="image/*"
                     onChange={handleOnFileChange}
-                ></input>
-                <input type="submit" value="Tweet"></input>
+                ></AttachedInput>
+                <SubmitButton type="submit" value="➔"></SubmitButton>
                 {attachedFile && (
                     <div>
                         <img
@@ -113,7 +129,7 @@ function Home({ userObj }: { userObj: any }) {
                         <button onClick={handleOnClearFile}>Clear</button>
                     </div>
                 )}
-            </form>
+            </Form>
             <div>
                 {allTweets.map((tweet: any) => (
                     <Tweet
