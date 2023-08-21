@@ -81,7 +81,6 @@ function App() {
         <>
             <GlobalStyles />
             <Container>
-                <Logo src={LOGO_URL} width="50px" height="50px" />
                 {init ? (
                     <Router
                         isLoggedIn={Boolean(userObj)}
