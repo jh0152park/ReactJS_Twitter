@@ -41,6 +41,7 @@ export const AttachedBox = styled.div`
     }
     &:hover {
         cursor: pointer;
+        scale: 1.1;
     }
 `;
 
@@ -59,6 +60,7 @@ export const SubmitButton = styled.input`
     top: -2px;
     &:hover {
         cursor: pointer;
+        scale: 1.1;
     }
 `;
 
@@ -80,6 +82,7 @@ export const FrameButton = styled.button`
     background-color: inherit;
     color: #1988ec;
     font-weight: bold;
+    margin-top: 5px;
     &:hover {
         cursor: pointer;
         scale: 1.1;
