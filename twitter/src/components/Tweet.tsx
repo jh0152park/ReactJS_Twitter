@@ -2,6 +2,13 @@ import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import { dbService, storageService } from "../firebase";
 import { useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
+import {
+    DeleteButton,
+    EditButton,
+    TweetContainer,
+    Text,
+    Image,
+} from "../style/TweetStyle";
 
 function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
     const [edit, setEdit] = useState(false);
@@ -42,6 +49,7 @@ function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
         setEdit(false);
     }
 
+    console.log(tweetObj.attachedFileURL.length);
     return (
         <div>
             {edit ? (
@@ -64,20 +72,26 @@ function Tweet({ tweetObj, isOwner }: { tweetObj: any; isOwner: boolean }) {
                 </>
             ) : (
                 <>
-                    <h4>{tweetObj.tweet}</h4>
-                    {tweetObj.attachedFileURL && (
-                        <img
-                            src={tweetObj.attachedFileURL}
-                            width="50px"
-                            height="50px"
-                        />
-                    )}
-                    {isOwner && (
-                        <>
-                            <button onClick={toggleEdit}>Edit</button>
-                            <button onClick={handleDeletePost}>Delete</button>
-                        </>
-                    )}
+                    <TweetContainer
+                        isAttached={tweetObj.attachedFileURL.length > 1}
+                    >
+                        <Text>{tweetObj.tweet}</Text>
+                        {tweetObj.attachedFileURL && (
+                            <Image
+                                src={tweetObj.attachedFileURL}
+                                width="150px"
+                                height="150px"
+                            />
+                        )}
+                        {isOwner && (
+                            <>
+                                <EditButton onClick={toggleEdit}>✏️</EditButton>
+                                <DeleteButton onClick={handleDeletePost}>
+                                    🗑️
+                                </DeleteButton>
+                            </>
+                        )}
+                    </TweetContainer>
                 </>
             )}
         </div>

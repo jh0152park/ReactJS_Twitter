@@ -4,7 +4,7 @@ export const Container = styled.div``;
 
 export const Form = styled.form`
     width: 300px;
-    height: 150px;
+    height: 260px;
     box-sizing: border-box;
     /* background-color: teal; */
     display: flex;
