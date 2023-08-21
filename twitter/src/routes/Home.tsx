@@ -55,19 +55,6 @@ function Home({ userObj }: { userObj: any }) {
         setTweet(value);
     }
 
-    // async function getAllTweets() {
-    //     const q = query(collection(dbService, "tweets"));
-    //     const querySnapshot = await getDocs(q);
-
-    //     querySnapshot.forEach((document) => {
-    //         const tweetObj = {
-    //             ...document.data(),
-    //             id: document.id,
-    //         };
-    //         setAllTweets((prev: any) => [tweetObj, ...prev]);
-    //     });
-    // }
-
     function handleOnFileChange(event: any) {
         const file = event.target.files[0];
         const reader = new FileReader();

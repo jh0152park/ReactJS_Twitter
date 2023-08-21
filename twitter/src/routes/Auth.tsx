@@ -8,6 +8,17 @@ import {
     signInWithPopup,
 } from "@firebase/auth";
 import { authService } from "../firebase";
+import {
+    ConfirmButton,
+    Container,
+    Form,
+    Input,
+    LogoImage,
+    SNSLoginButton,
+    SNSLoginButtons,
+    ToggleButton,
+} from "../style/AuthStyle";
+import { GITHUB_LOGO_URL, GOOGLE_LOGO_URL } from "..";
 
 function Auth() {
     const [email, setEmail] = useState("");
@@ -89,9 +100,9 @@ function Auth() {
     }
 
     return (
-        <div>
-            <form onSubmit={handleOnSubmit}>
-                <input
+        <Container>
+            <Form onSubmit={handleOnSubmit}>
+                <Input
                     name="email"
                     type="email"
                     placeholder="Email"
@@ -99,7 +110,7 @@ function Auth() {
                     value={email}
                     onChange={handleOnChange}
                 />
-                <input
+                <Input
                     name="password"
                     type="password"
                     placeholder="Password"
@@ -107,24 +118,26 @@ function Auth() {
                     value={password}
                     onChange={handleOnChange}
                 />
-                <input
+                <ConfirmButton
                     type="submit"
                     value={newAccount ? "Create Account" : "Sign In"}
                 />
-            </form>
-            <span onClick={toggleAccount}>
+            </Form>
+            <ToggleButton onClick={toggleAccount}>
                 {newAccount ? "Sign In" : "Create Account"}
-            </span>
-            <div>
-                <button onClick={handleOnSocialClick} name="google">
+            </ToggleButton>
+            <SNSLoginButtons>
+                <SNSLoginButton onClick={handleOnSocialClick} name="google">
                     Continue with Google
-                </button>
-                <button onClick={handleOnSocialClick} name="github">
+                    <LogoImage src={GOOGLE_LOGO_URL} />
+                </SNSLoginButton>
+                <SNSLoginButton onClick={handleOnSocialClick} name="github">
                     Continue with Github
-                </button>
-            </div>
+                    <LogoImage src={GITHUB_LOGO_URL} />
+                </SNSLoginButton>
+            </SNSLoginButtons>
             <div>{error}</div>
-        </div>
+        </Container>
     );
 }
 
