@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Router from "./Router";
 import { authService } from "../firebase";
 import { createGlobalStyle } from "styled-components";
+import { LOGO_URL } from "..";
+import { Container, Logo } from "../style/AppStyle";
 
 const GlobalStyles = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -36,6 +38,8 @@ const GlobalStyles = createGlobalStyle`
     }
     body {
         line-height: 1;
+        background-color: #171819;
+        color: whitesmoke;
     }
     ol, ul {
         list-style: none;
@@ -51,6 +55,10 @@ const GlobalStyles = createGlobalStyle`
     table {
         border-collapse: collapse;
         border-spacing: 0;
+    }
+    a {
+        text-decoration: none;
+        color: inherit
     }
 `;
 
@@ -72,14 +80,17 @@ function App() {
     return (
         <>
             <GlobalStyles />
-            {init ? (
-                <Router
-                    isLoggedIn={Boolean(userObj)}
-                    userObj={userObj}
-                ></Router>
-            ) : (
-                "Initialzing..."
-            )}
+            <Container>
+                <Logo src={LOGO_URL} width="50px" height="50px" />
+                {init ? (
+                    <Router
+                        isLoggedIn={Boolean(userObj)}
+                        userObj={userObj}
+                    ></Router>
+                ) : (
+                    "Initialzing..."
+                )}
+            </Container>
         </>
     );
 }
