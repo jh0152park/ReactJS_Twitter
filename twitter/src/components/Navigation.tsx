@@ -23,7 +23,9 @@ function Navigation({ userObj }: { userObj: any }) {
                         <div>
                             <FontAwesomeIcon icon={faUser} size="2x" />
                         </div>
-                        {userObj.displayName}'s Profile
+                        {userObj.displayName
+                            ? userObj.displayName + "s Profile"
+                            : "Profile"}
                     </Button>
                 </Link>
             </div>
